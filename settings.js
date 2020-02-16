@@ -1,24 +1,24 @@
 // Saves options to chrome.storage
-function setAccuracy() {
-    var accuracy = document.getElementById('accuracy').value;
+function setTolerance() {
+    var tolerance = document.getElementById('tolerance').value;
     chrome.storage.sync.set({
-        accuracy: accuracy
+        tolerance: tolerance
     }, () => {
         // Update status to let user know options were saved.
-        document.getElementById('indicator').textContent = accuracy;
+        document.getElementById('indicator').textContent = tolerance;
     });
 }
 
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
-function getAccuracy() {
+function getTolerance() {
     // Use default value color = 'red' and likesColor = true.
-    chrome.storage.sync.get("accuracy", function (items) {
-        document.getElementById('accuracy').value = items.accuracy;
-        document.getElementById('indicator').textContent = items.accuracy;
+    chrome.storage.sync.get("tolerance", function (items) {
+        document.getElementById('tolerance').value = items.tolerance;
+        document.getElementById('indicator').textContent = items.tolerance;
     });
 }
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('accuracy').onchange = setAccuracy;
-    getAccuracy();
+    document.getElementById('tolerance').onchange = setTolerance;
+    getTolerance();
 });

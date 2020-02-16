@@ -4,7 +4,7 @@ chrome.contextMenus.create({
     contexts: ["image"]
 });
 chrome.storage.sync.set({
-    accuracy: 5
+    tolerance: 5
 });
 
 

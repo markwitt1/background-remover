@@ -14,10 +14,10 @@ chrome.runtime.onMessage.addListener(
             var imgData = ctx.getImageData(0, 0, img.width, img.height);
             var background = imgData.data.slice(0, 4);
             console.log("Background: " + background);
-            getAccuracy(accuracy => {
+            getTolerance(tolerance => {
                 for (var i = 0; i < imgData.data.length; i += 4) {
                     var current = imgData.data.slice(i, i + 4)
-                    if (testColor(current, background, accuracy)) {
+                    if (testColor(current, background, tolerance)) {
                         imgData.data[i] = 0;
                         imgData.data[i + 1] = 0;
                         imgData.data[i + 2] = 0;
@@ -32,7 +32,7 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
-function testColor(a, b, accuracy) {
+function testColor(a, b, tolerance) {
 
     if (a === b) return true;
     if (a == null || b == null) return false;
@@ -44,7 +44,7 @@ function testColor(a, b, accuracy) {
     // you might want to clone your array first.
 
     for (var i = 0; i < a.length; ++i) {
-        if (a[i] - b[i] > accuracy || a[i] - b[i] < -accuracy) {
+        if (a[i] - b[i] > tolerance || a[i] - b[i] < -tolerance) {
             return false;
         }
 
@@ -53,9 +53,9 @@ function testColor(a, b, accuracy) {
 
 }
 
-function getAccuracy(callback) {
+function getTolerance(callback) {
     // Use default value color = 'red' and likesColor = true.
-    chrome.storage.sync.get("accuracy", function (items) {
-        callback(items.accuracy)
+    chrome.storage.sync.get("tolerance", function (items) {
+        callback(items.tolerance)
     });
 }
